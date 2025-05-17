@@ -1,5 +1,9 @@
 # Explore n8n
 
+## Demo
+
+![Hello World Workflow Demo](workflows/examples/hello-world/assets/screencast.gif)
+
 This repository contains explorations and automations using [n8n](https://n8n.io/), a workflow automation tool. It's designed to help you quickly spin up n8n in Docker and explore its capabilities.
 
 ## Features

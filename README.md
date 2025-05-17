@@ -54,7 +54,3 @@ npm run test:workflows
 1. Create a feature branch following the `YYYY.MM.DD/description` format
 2. Make your changes
 3. Submit a pull request
-
-## License
-
-MIT - see LICENSE file for details.

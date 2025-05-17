@@ -1,0 +1,290 @@
+{
+    "name": "NASA Astronomy Picture of the Day (MMS)",
+    "nodes": [
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "hours",
+                "hoursInterval": 24
+              }
+            ]
+          }
+        },
+        "name": "Schedule Trigger",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          -820,
+          40
+        ],
+        "id": "010d18d5-2d40-4091-a974-67e34fc382df"
+      },
+      {
+        "parameters": {
+          "additionalFields": {}
+        },
+        "name": "NASA",
+        "type": "n8n-nodes-base.nasa",
+        "typeVersion": 1,
+        "position": [
+          -600,
+          40
+        ],
+        "id": "4d9a1d4e-cc53-4e88-b02d-2e37c8ae22a1",
+        "credentials": {
+          "nasaApi": {
+            "id": "isXpQMy199IL1YVg",
+            "name": "NASA account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "leftValue": "={{ $json.media_type }}",
+                "rightValue": "image",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "name": "Check Media Type",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.2,
+        "position": [
+          -380,
+          40
+        ],
+        "id": "ef58794e-f377-498e-8293-98dd15bd6547"
+      },
+      {
+        "parameters": {
+          "functionCode": "// For image media type\nconst item = JSON.parse(JSON.stringify(items[0].json));\n\nreturn [{\n  json: {\n    title: item.title,\n    explanation: item.explanation,\n    date: item.date,\n    imageUrl: item.url,\n    copyright: item.copyright || 'NASA',\n    hdUrl: item.hdurl || item.url,\n    message: `NASA Astronomy Picture of the Day: ${item.title}\\n\\nDate: ${item.date}\\n\\n${item.explanation.substring(0, 140)}...\\n\\nCopyright: ${item.copyright || 'NASA'}`\n  }\n}];"
+        },
+        "name": "Format Image Data",
+        "type": "n8n-nodes-base.function",
+        "typeVersion": 1,
+        "position": [
+          -160,
+          20
+        ],
+        "id": "2b79fec8-d570-4fad-9913-ab0863462b09"
+      },
+      {
+        "parameters": {
+          "functionCode": "// For video media type\nconst item = JSON.parse(JSON.stringify(items[0].json));\n\nreturn [{\n  json: {\n    title: item.title,\n    explanation: item.explanation,\n    date: item.date,\n    videoUrl: item.url,\n    copyright: item.copyright || 'NASA',\n    message: `NASA Astronomy Picture of the Day: ${item.title} (Video)\\n\\nDate: ${item.date}\\n\\n${item.explanation.substring(0, 140)}...\\n\\nVideo: ${item.url}\\n\\nCopyright: ${item.copyright || 'NASA'}`\n  }\n}];"
+        },
+        "name": "Format Video Data",
+        "type": "n8n-nodes-base.function",
+        "typeVersion": 1,
+        "position": [
+          -160,
+          200
+        ],
+        "id": "0824db71-2159-4901-b0c2-fcb0b9b4f9d7"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "=https://api.twilio.com/2010-04-01/Accounts/ACf6895d133ddf2c2fbcb6fac2fcd82316/Messages.json",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "twilioApi",
+          "sendBody": true,
+          "contentType": "form-urlencoded",
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "From",
+                "value": "+18774482079"
+              },
+              {
+                "name": "To",
+                "value": "+13605313830"
+              },
+              {
+                "name": "Body",
+                "value": "={{ $json.title }}\n\n{{ $json.explanation }}"
+              },
+              {
+                "name": "MediaUrl",
+                "value": "={{ $json.imageUrl }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "name": "Send MMS",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          120,
+          80
+        ],
+        "id": "da116112-b625-4946-8c6a-b9b2ff9f2322",
+        "credentials": {
+          "httpBasicAuth": {
+            "id": "NyjAAixCM8j9xWYr",
+            "name": "Twilio account"
+          },
+          "twilioApi": {
+            "id": "NyjAAixCM8j9xWYr",
+            "name": "Twilio account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "=https://api.twilio.com/2010-04-01/Accounts/ACf6895d133ddf2c2fbcb6fac2fcd82316/Messages.json",
+          "authentication": "predefinedCredentialType",
+          "nodeCredentialType": "twilioApi",
+          "sendBody": true,
+          "contentType": "form-urlencoded",
+          "bodyParameters": {
+            "parameters": [
+              {
+                "name": "From",
+                "value": "+18774482079"
+              },
+              {
+                "name": "To",
+                "value": "+13605313830"
+              },
+              {
+                "name": "Body",
+                "value": "={{ $json.message }}"
+              },
+              {
+                "name": "MediaUrl",
+                "value": "={{ $json.videoUrl }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "name": "Send Video MMS",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.1,
+        "position": [
+          100,
+          240
+        ],
+        "id": "187b668f-205e-43f4-890e-8e6e0cb7eb62",
+        "credentials": {
+          "httpBasicAuth": {
+            "id": "NyjAAixCM8j9xWYr",
+            "name": "Twilio account"
+          },
+          "twilioApi": {
+            "id": "NyjAAixCM8j9xWYr",
+            "name": "Twilio account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "content": "## Twilio configuration needed\nUpdate with your Account SID",
+          "height": 400,
+          "width": 340
+        },
+        "type": "n8n-nodes-base.stickyNote",
+        "position": [
+          0,
+          0
+        ],
+        "typeVersion": 1,
+        "id": "d608e9e4-3606-4831-8507-f0a5ed474a1a",
+        "name": "Sticky Note"
+      }
+    ],
+    "pinData": {},
+    "connections": {
+      "Schedule Trigger": {
+        "main": [
+          [
+            {
+              "node": "NASA",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "NASA": {
+        "main": [
+          [
+            {
+              "node": "Check Media Type",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Check Media Type": {
+        "main": [
+          [
+            {
+              "node": "Format Image Data",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Format Video Data",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Format Image Data": {
+        "main": [
+          [
+            {
+              "node": "Send MMS",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Format Video Data": {
+        "main": [
+          [
+            {
+              "node": "Send Video MMS",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "active": false,
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "versionId": "e5f015ad-7f24-4a58-b09a-23c1833594fe",
+    "meta": {
+      "instanceId": "bd29bfc42571b88eb03eb63b0d886b5dea6cf0813901231e3aa458c693529395"
+    },
+    "id": "xkT8naawMnV4dpTd",
+    "tags": []
+  }

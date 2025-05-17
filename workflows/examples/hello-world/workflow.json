@@ -1,90 +1,60 @@
 {
-  "name": "Hello World",
+  "name": "Simple Hello World",
   "nodes": [
     {
       "parameters": {},
-      "name": "Start",
-      "type": "n8n-nodes-base.start",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [250, 300]
-    },
-    {
-      "parameters": {
-        "url": "https://api.agify.io",
-        "options": {
-          "queryParameters": {
-            "parameters": [
-              {
-                "name": "name",
-                "value": "John"
-              }
-            ]
-          }
-        },
-        "sendHeaders": true,
-        "sendQuery": true
-      },
-      "name": "HTTP Request",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 1,
-      "position": [490, 300],
-      "webhookId": ""
     },
     {
       "parameters": {
         "values": {
           "string": [
             {
-              "name": "requestUrl",
-              "value": "={{$node[\"HTTP Request\"].parameters.url}}"
-            },
-            {
-              "name": "requestQuery",
-              "value": "={{$node[\"HTTP Request\"].parameters.query}}"
-            },
-            {
-              "name": "responseData",
-              "value": "={{$json}}"
+              "name": "greeting",
+              "value": "Hello, World!"
             }
           ]
-        },
-        "options": {}
+        }
       },
-      "name": "Debug Info",
+      "name": "Set Greeting",
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
-      "position": [730, 300]
-    },
-    {
-      "parameters": {
-        "functionCode": "const name = items[0]?.json?.requestQuery?.parameters?.name || 'there';\nconst age = items[0]?.json?.responseData?.age || 'unknown';\nreturn {\n  json: {\n    greeting: 'Hello, ' + name + '! You are probably ' + age + ' years old.'\n  }\n};"
-      },
-      "name": "Create Greeting",
-      "type": "n8n-nodes-base.function",
-      "typeVersion": 1,
-      "position": [970, 300]
+      "position": [500, 300]
     },
     {
       "parameters": {},
-      "name": "Respond to Webhook",
+      "name": "Webhook Response",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
-      "position": [1210, 300],
-      "webhookId": ""
+      "position": [750, 300]
     }
   ],
   "connections": {
-    "Start": {
-      "main": [[{ "node": "HTTP Request", "type": "main", "index": 0 }]]
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Set Greeting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
-    "HTTP Request": {
-      "main": [[{ "node": "Debug Info", "type": "main", "index": 0 }]]
-    },
-    "Debug Info": {
-      "main": [[{ "node": "Create Greeting", "type": "main", "index": 0 }]]
-    },
-    "Create Greeting": {
-      "main": [[{ "node": "Respond to Webhook", "type": "main", "index": 0 }]]
+    "Set Greeting": {
+      "main": [
+        [
+          {
+            "node": "Webhook Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
-  }
+  },
+  "active": false
 }

@@ -12,6 +12,8 @@
 
 ### NASA Astronomy Picture of the Day (APOD) MMS
 
+[![NASA APOD Workflow](workflows/examples/nasa-astronomy-picture-of-the-day-mms/assets/screenshot-twilio-configuration-needed.png)](workflows/examples/nasa-astronomy-picture-of-the-day-mms/README.md)
+
 [![NASA APOD MMS Example](workflows/examples/nasa-astronomy-picture-of-the-day-mms/assets/screenshot-twilio-example-mms.png)](workflows/examples/nasa-astronomy-picture-of-the-day-mms/README.md)
 
 Send NASA's Astronomy Picture of the Day directly to your phone via MMS using Twilio.

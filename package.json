@@ -13,6 +13,12 @@
   "license": "MIT",
   "author": "Rob Brennan <rob@sploosh.ai>",
   "scripts": {
+    "start": "docker-compose up -d",
+    "stop": "docker-compose down",
+    "restart": "docker-compose restart",
+    "logs": "docker-compose logs -f",
+    "docker:build": "docker-compose build --no-cache",
+    "docker:clean": "docker-compose down -v --remove-orphans",
     "test": "npm run test:workflows",
     "test:workflows": "chmod +x .github/test-workflows.sh && .github/test-workflows.sh",
     "test:workflows:semantic": "act pull_request -e .github/test-data/pr-events/minor.json -W .github/workflows/semantic-pr-check.yml",

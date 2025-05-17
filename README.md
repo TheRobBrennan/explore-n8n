@@ -4,7 +4,7 @@ This repository contains explorations and automations using [n8n](https://n8n.io
 
 ## Features
 
-- 🐳 Docker Compose setup for easy n8n deployment
+- 🐳 Docker Compose setup for easy n8n development
 - 📁 Organized workflow examples with documentation
 - 🔄 Persistent storage for your n8n data
 - 🚀 Quick start with example workflows

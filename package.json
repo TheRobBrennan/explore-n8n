@@ -1,0 +1,20 @@
+{
+  "name": "explore-n8n",
+  "version": "0.0.0",
+  "description": "",
+  "homepage": "https://github.com/TheRobBrennan/explore-n8n#readme",
+  "bugs": {
+    "url": "https://github.com/TheRobBrennan/explore-n8n/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheRobBrennan/explore-n8n.git"
+  },
+  "license": "MIT",
+  "author": "Rob Brennan <rob@sploosh.ai>",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

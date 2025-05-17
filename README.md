@@ -41,12 +41,40 @@ This repository contains explorations and automations using [n8n](https://n8n.io
 ```text
 .
 ├── docker-compose.yml    # Docker Compose configuration for n8n
+├── n8n/                  # Persistent n8n data
+│   ├── data/            # n8n database and workflow storage
+│   └── config/          # n8n configuration files
 ├── workflows/            # Directory for n8n workflows
 │   └── examples/         # Example workflows
 │       └── hello-world/  # Example workflow
 │           ├── README.md # Documentation for the example
 │           └── workflow.json  # The workflow definition
-└── docs/                 # Additional documentation
+├── .env.example         # Example environment variables
+└── docs/                # Additional documentation
+```
+
+## Persistent Configuration
+
+Your n8n configuration and data are persisted in the `n8n/` directory:
+
+- `n8n/data/`: Contains the SQLite database, workflow files, and other persistent data
+- `n8n/config/`: Stores n8n configuration files
+
+### Environment Variables
+
+Copy `.env.example` to `.env` and update the values:
+
+```bash
+cp .env.example .env
+# Edit .env with your preferred editor
+```
+
+### Backing Up Your Data
+
+To back up your n8n data, simply copy the `n8n/` directory:
+
+```bash
+cp -r n8n/ n8n-backup-$(date +%Y%m%d)
 ```
 
 ## Managing n8n

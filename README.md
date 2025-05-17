@@ -12,11 +12,9 @@
 
 ### NASA Astronomy Picture of the Day (APOD) MMS
 
-[![NASA APOD Workflow](workflows/examples/nasa-astronomy-picture-of-the-day-mms/assets/screenshot-twilio-configuration-needed.png)](workflows/examples/nasa-astronomy-picture-of-the-day-mms/README.md)
+[![NASA APOD Demo](workflows/examples/nasa-astronomy-picture-of-the-day-mms/assets/screencast.gif)](workflows/examples/nasa-astronomy-picture-of-the-day-mms/README.md)
 
-[![NASA APOD MMS Example](workflows/examples/nasa-astronomy-picture-of-the-day-mms/assets/screenshot-twilio-example-mms.png)](workflows/examples/nasa-astronomy-picture-of-the-day-mms/README.md)
-
-Send NASA's Astronomy Picture of the Day directly to your phone via MMS using Twilio.
+Send NASA's Astronomy Picture of the Day directly to your phone via MMS using Twilio. Includes support for both images and video content.
 
 This repository contains explorations and automations using [n8n](https://n8n.io/), a workflow automation tool. It's designed to help you quickly spin up n8n in Docker and explore its capabilities.
 

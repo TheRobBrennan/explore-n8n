@@ -1,10 +1,14 @@
 # NASA Astronomy Picture of the Day MMS
 
+[![NASA APOD MMS Demo](./assets/screencast.gif)](./screencast.gif)
+
 This workflow automatically fetches NASA's Astronomy Picture of the Day (APOD) and sends it as an MMS message via Twilio. It handles both image and video content types, providing a formatted message with details about the APOD.
 
-![Workflow Screenshot](./assets/screenshot-twilio-configuration-needed.png)
+## Screenshots
 
-![Twilio example SMS message](./assets/screenshot-twilio-example-mms.png)
+| Workflow Configuration | Example MMS |
+|-----------------------|-------------|
+| ![Workflow Screenshot](./assets/screenshot-twilio-configuration-needed.png) | ![Twilio example MMS](./assets/screenshot-twilio-example-mms.png) |
 
 ## Features
 

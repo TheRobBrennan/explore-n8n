@@ -8,6 +8,12 @@ This is a simple example workflow that demonstrates basic n8n functionality.
 - Processes the data with a Function node
 - Outputs a greeting message
 
+## Screenshot
+
+![Hello World Workflow](./assets/screenshot-01.png)
+
+*Figure 1: The Hello World workflow in n8n*
+
 ## How to Use
 
 1. Import the `workflow.json` file into your n8n instance

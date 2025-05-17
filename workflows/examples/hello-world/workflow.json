@@ -1,82 +1,54 @@
 {
-  "name": "Hello World",
+  "name": "Simple Hello World",
   "nodes": [
     {
       "parameters": {},
-      "name": "Start",
-      "type": "n8n-nodes-base.start",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
-      "position": [
-        250,
-        300
-      ]
+      "position": [250, 300]
     },
     {
       "parameters": {
-        "url": "https://api.agify.io?name=john",
-        "options": {}
+        "values": {
+          "string": [
+            {
+              "name": "greeting",
+              "value": "Hello, World!"
+            }
+          ]
+        }
       },
-      "name": "HTTP Request",
-      "type": "n8n-nodes-base.httpRequest",
+      "name": "Set Greeting",
+      "type": "n8n-nodes-base.set",
       "typeVersion": 1,
-      "position": [
-        490,
-        300
-      ],
-      "webhookId": ""
-    },
-    {
-      "parameters": {
-        "functionCode": "const name = 'John'\nconst age = items[0].json.age\nreturn {\n  json: {\n    greeting: `Hello, ${name}! You are probably ${age} years old.`\n  }\n}"
-      },
-      "name": "Create Greeting",
-      "type": "n8n-nodes-base.function",
-      "typeVersion": 1,
-      "position": [
-        730,
-        300
-      ]
+      "position": [500, 300]
     },
     {
       "parameters": {},
-      "name": "Respond to Webhook",
+      "name": "Webhook Response",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
-      "position": [
-        970,
-        300
-      ],
-      "webhookId": ""
+      "position": [750, 300]
     }
   ],
   "connections": {
-    "Start": {
+    "Manual Trigger": {
       "main": [
         [
           {
-            "node": "HTTP Request",
+            "node": "Set Greeting",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "HTTP Request": {
+    "Set Greeting": {
       "main": [
         [
           {
-            "node": "Create Greeting",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Create Greeting": {
-      "main": [
-        [
-          {
-            "node": "Respond to Webhook",
+            "node": "Webhook Response",
             "type": "main",
             "index": 0
           }
@@ -84,7 +56,5 @@
       ]
     }
   },
-  "active": false,
-  "settings": {},
-  "tag": "Hello World"
+  "active": false
 }

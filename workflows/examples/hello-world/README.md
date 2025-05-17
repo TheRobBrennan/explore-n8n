@@ -1,36 +1,27 @@
 # Hello World Workflow
 
-This is a simple example workflow that demonstrates basic n8n functionality.
+A simple n8n workflow that demonstrates a basic "Hello, World!" example.
 
-## Overview
+## Demo
 
-- Uses the HTTP Request node to fetch data from an API
-- Processes the data with a Function node
-- Outputs a greeting message
+![Hello World Workflow Demo](assets/screencast.gif)
+
+## Workflow Description
+
+This workflow demonstrates a basic n8n setup with:
+
+1. A Manual Trigger to start the workflow
+2. A Set node that defines the greeting message
+3. A Webhook Response node that returns the greeting
 
 ## How to Use
 
-1. Import the `workflow.json` file into your n8n instance
-2. The workflow will be available in the "Hello World" collection
-3. Click "Execute Workflow" to run it
+1. Open the workflow in n8n
+2. Click "Execute Workflow" in the top-right corner
+3. Click "Test Step" on the Manual Trigger node
+4. View the response in the Webhook Response node
 
-## Workflow Details
+## Files
 
-### Nodes Used
-
-1. **HTTP Request Node**: Makes a GET request to `https://api.agify.io`
-2. **Function Node**: Processes the response and creates a greeting
-3. **Respond to Webhook Node**: Returns the final output
-
-### Input/Output
-
-- **Input**: None required
-- **Output**: A greeting message with a name and age prediction
-
-## Example Output
-
-```json
-{
-  "greeting": "Hello, John! You are probably 55 years old."
-}
-```
+- `workflow.json` - The workflow definition
+- `assets/screencast.gif` - Demo of the workflow in action

@@ -19,6 +19,14 @@ node_modules/
 
 # Debug logs
 npm-debug.log*
+
+# n8n
+n8n/
+!.gitkeep
+
+# Environment variables
+.env
+!.env.example
 yarn-debug.log*
 yarn-error.log*
 

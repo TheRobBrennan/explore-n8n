@@ -18,12 +18,12 @@
         "position": [
           -820,
           40
-        ],
-        "id": "010d18d5-2d40-4091-a974-67e34fc382df"
+        ]
       },
       {
         "parameters": {
-          "additionalFields": {}
+          "resource": "apod",
+          "operation": "get"
         },
         "name": "NASA",
         "type": "n8n-nodes-base.nasa",
@@ -32,12 +32,8 @@
           -600,
           40
         ],
-        "id": "4d9a1d4e-cc53-4e88-b02d-2e37c8ae22a1",
         "credentials": {
-          "nasaApi": {
-            "id": "isXpQMy199IL1YVg",
-            "name": "NASA account"
-          }
+          "nasaApi": "nasa-api-credentials"
         }
       },
       {
@@ -69,12 +65,12 @@
         "position": [
           -380,
           40
-        ],
-        "id": "ef58794e-f377-498e-8293-98dd15bd6547"
+        ]
       },
       {
         "parameters": {
-          "functionCode": "// For image media type\nconst item = JSON.parse(JSON.stringify(items[0].json));\n\nreturn [{\n  json: {\n    title: item.title,\n    explanation: item.explanation,\n    date: item.date,\n    imageUrl: item.url,\n    copyright: item.copyright || 'NASA',\n    hdUrl: item.hdurl || item.url,\n    message: `NASA Astronomy Picture of the Day: ${item.title}\\n\\nDate: ${item.date}\\n\\n${item.explanation.substring(0, 140)}...\\n\\nCopyright: ${item.copyright || 'NASA'}`\n  }\n}];"
+          "functionCode": "// For image media type\nconst item = JSON.parse(JSON.stringify(items[0].json));\n\nreturn [{\n  json: {\n    title: item.title,\n    explanation: item.explanation,\n    date: item.date,\n    imageUrl: item.url,\n    copyright: item.copyright || 'NASA',\n    hdUrl: item.hdurl || item.url,\n    message: `🚀 NASA Astronomy Picture of the Day: ${item.title}\\n\nDate: ${item.date}\\n\n${item.explanation.substring(0, 140)}...\
+\nCopyright: ${item.copyright || 'NASA'}`\n  }\n}];"
         },
         "name": "Format Image Data",
         "type": "n8n-nodes-base.function",
@@ -82,12 +78,13 @@
         "position": [
           -160,
           20
-        ],
-        "id": "2b79fec8-d570-4fad-9913-ab0863462b09"
+        ]
       },
       {
         "parameters": {
-          "functionCode": "// For video media type\nconst item = JSON.parse(JSON.stringify(items[0].json));\n\nreturn [{\n  json: {\n    title: item.title,\n    explanation: item.explanation,\n    date: item.date,\n    videoUrl: item.url,\n    copyright: item.copyright || 'NASA',\n    message: `NASA Astronomy Picture of the Day: ${item.title} (Video)\\n\\nDate: ${item.date}\\n\\n${item.explanation.substring(0, 140)}...\\n\\nVideo: ${item.url}\\n\\nCopyright: ${item.copyright || 'NASA'}`\n  }\n}];"
+          "functionCode": "// For video media type\nconst item = JSON.parse(JSON.stringify(items[0].json));\n\nreturn [{\n  json: {\n    title: item.title,\n    explanation: item.explanation,\n    date: item.date,\n    videoUrl: item.url,\n    copyright: item.copyright || 'NASA',\n    message: `🎥 NASA Astronomy Picture of the Day: ${item.title}\\n\nDate: ${item.date}\\n\n${item.explanation.substring(0, 140)}...\
+\nVideo: ${item.url}\
+\nCopyright: ${item.copyright || 'NASA'}`\n  }\n}];"
         },
         "name": "Format Video Data",
         "type": "n8n-nodes-base.function",
@@ -95,13 +92,12 @@
         "position": [
           -160,
           200
-        ],
-        "id": "0824db71-2159-4901-b0c2-fcb0b9b4f9d7"
+        ]
       },
       {
         "parameters": {
           "method": "POST",
-          "url": "=https://api.twilio.com/2010-04-01/Accounts/ACf6895d133ddf2c2fbcb6fac2fcd82316/Messages.json",
+          "url": "=https://api.twilio.com/2010-04-01/Accounts/{{$env.TWILIO_ACCOUNT_SID}}/Messages.json",
           "authentication": "predefinedCredentialType",
           "nodeCredentialType": "twilioApi",
           "sendBody": true,
@@ -110,15 +106,15 @@
             "parameters": [
               {
                 "name": "From",
-                "value": "+18774482079"
+                "value": "={{$env.TWILIO_PHONE_NUMBER}}"
               },
               {
                 "name": "To",
-                "value": "+13605313830"
+                "value": "={{$env.RECIPIENT_PHONE_NUMBER}}"
               },
               {
                 "name": "Body",
-                "value": "={{ $json.title }}\n\n{{ $json.explanation }}"
+                "value": "={{ $json.title }}\\n\n{{ $json.explanation }}"
               },
               {
                 "name": "MediaUrl",
@@ -135,22 +131,14 @@
           120,
           80
         ],
-        "id": "da116112-b625-4946-8c6a-b9b2ff9f2322",
         "credentials": {
-          "httpBasicAuth": {
-            "id": "NyjAAixCM8j9xWYr",
-            "name": "Twilio account"
-          },
-          "twilioApi": {
-            "id": "NyjAAixCM8j9xWYr",
-            "name": "Twilio account"
-          }
+          "twilioApi": "twilio-api-credentials"
         }
       },
       {
         "parameters": {
           "method": "POST",
-          "url": "=https://api.twilio.com/2010-04-01/Accounts/ACf6895d133ddf2c2fbcb6fac2fcd82316/Messages.json",
+          "url": "=https://api.twilio.com/2010-04-01/Accounts/{{$env.TWILIO_ACCOUNT_SID}}/Messages.json",
           "authentication": "predefinedCredentialType",
           "nodeCredentialType": "twilioApi",
           "sendBody": true,
@@ -159,11 +147,11 @@
             "parameters": [
               {
                 "name": "From",
-                "value": "+18774482079"
+                "value": "={{$env.TWILIO_PHONE_NUMBER}}"
               },
               {
                 "name": "To",
-                "value": "+13605313830"
+                "value": "={{$env.RECIPIENT_PHONE_NUMBER}}"
               },
               {
                 "name": "Body",
@@ -184,32 +172,21 @@
           100,
           240
         ],
-        "id": "187b668f-205e-43f4-890e-8e6e0cb7eb62",
         "credentials": {
-          "httpBasicAuth": {
-            "id": "NyjAAixCM8j9xWYr",
-            "name": "Twilio account"
-          },
-          "twilioApi": {
-            "id": "NyjAAixCM8j9xWYr",
-            "name": "Twilio account"
-          }
+          "twilioApi": "twilio-api-credentials"
         }
       },
       {
         "parameters": {
-          "content": "## Twilio configuration needed\nUpdate with your Account SID",
-          "height": 400,
-          "width": 340
+          "content": "## Twilio configuration needed\n1. Set up Twilio credentials in n8n\n2. Add environment variables:\n   - `TWILIO_ACCOUNT_SID`\n   - `TWILIO_AUTH_TOKEN`\n   - `TWILIO_PHONE_NUMBER`\n   - `RECIPIENT_PHONE_NUMBER`\n3. Update the workflow with your Twilio Account SID in the HTTP request URLs"
         },
+        "name": "Configuration Note",
         "type": "n8n-nodes-base.stickyNote",
-        "position": [
-          0,
-          0
-        ],
         "typeVersion": 1,
-        "id": "d608e9e4-3606-4831-8507-f0a5ed474a1a",
-        "name": "Sticky Note"
+        "position": [
+          -800,
+          200
+        ]
       }
     ],
     "pinData": {},
@@ -278,13 +255,10 @@
       }
     },
     "active": false,
-    "settings": {
-      "executionOrder": "v1"
-    },
-    "versionId": "e5f015ad-7f24-4a58-b09a-23c1833594fe",
+    "settings": {},
+    "id": "nasa-apod-mms-workflow",
     "meta": {
-      "instanceId": "bd29bfc42571b88eb03eb63b0d886b5dea6cf0813901231e3aa458c693529395"
+      "instanceId": "c1a2b3c4-d5e6-f7g8-h9i0-j1k2l3m4n5o6p"
     },
-    "id": "xkT8naawMnV4dpTd",
-    "tags": []
+    "tags": ["nasa", "apod", "mms", "twilio"]
   }

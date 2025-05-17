@@ -124,12 +124,12 @@ docker system prune -a --volumes
 
 #### Docker Management
 
-- `npm start` - Start the n8n container
-- `npm stop` - Stop the n8n container
+- `npm start` - Start n8n in detached mode
+- `npm stop` - Stop and remove the n8n container
 - `npm run restart` - Restart the n8n container
 - `npm run logs` - View container logs
 - `npm run docker:build` - Rebuild the n8n container
-- `npm run docker:clean` - Remove containers and volumes (use with caution)
+- `npm run docker:clean` - Remove containers and volumes (⚠️ destructive)
 
 #### Testing
 

@@ -10,8 +10,17 @@
     },
     {
       "parameters": {
-        "url": "https://api.agify.io?name=John",
-        "options": {},
+        "url": "https://api.agify.io",
+        "options": {
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "name",
+                "value": "John"
+              }
+            ]
+          }
+        },
         "sendHeaders": true,
         "sendQuery": true
       },
@@ -48,7 +57,7 @@
     },
     {
       "parameters": {
-        "functionCode": "// Debug: Log the input items to see the structure\nconsole.log('Input items:', JSON.stringify(items, null, 2));\n\n// Safely get the request URL\nconst requestUrl = items[0]?.json?.requestUrl || '';\nconst nameMatch = requestUrl.match(/name=([^&]*)/);\nconst name = nameMatch ? decodeURIComponent(nameMatch[1]) : 'there';\n\n// Safely get the age from the API response\nconst age = items[0]?.json?.responseData?.age || 'unknown';\n\nreturn {\n  json: {\n    greeting: `Hello, ${name}! You are probably ${age} years old.`,\n    _debug: {\n      requestUrl: requestUrl,\n      name: name,\n      age: age\n    }\n  }\n};"
+        "functionCode": "const name = items[0]?.json?.requestQuery?.parameters?.name || 'there';\nconst age = items[0]?.json?.responseData?.age || 'unknown';\nreturn {\n  json: {\n    greeting: 'Hello, ' + name + '! You are probably ' + age + ' years old.'\n  }\n};"
       },
       "name": "Create Greeting",
       "type": "n8n-nodes-base.function",

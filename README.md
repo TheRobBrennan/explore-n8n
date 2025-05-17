@@ -30,7 +30,7 @@ This repository contains explorations and automations using [n8n](https://n8n.io
 1. Clone this repository and install dependencies:
 
    ```bash
-   git clone https://github.com/yourusername/explore-n8n.git
+   git clone https://github.com/TheRobBrennan/explore-n8n.git
    cd explore-n8n
    npm install
    ```
